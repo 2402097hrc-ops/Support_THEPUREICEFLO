@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics="">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<style>
+:root{--stageBg:#0e0e0e;--card:rgba(64,64,64,0.2);--muted:rgb(194,194,179);--blue:rgb(103,133,233);
+--phoneBg:#000;--text:#fff;--phoneBorder:#1c1c1c;--mediaBg1:#131313;--mediaBg2:#191919;--mediaBorder:#232323;--mediaLab:#9a9a94;--mediaSub:#5f5f5c;
+--cardSurface:rgba(255,255,255,.035);--cardSurfaceHover:rgba(255,255,255,.07);--cardBorderA:rgba(255,255,255,.55);--cardBorderB:rgba(255,255,255,.05);--cardBorderC:rgba(255,255,255,.35);--cardShadowInset:rgba(255,255,255,.06);--cardShadow:rgba(0,0,0,.3);
+--pillBorder:#fff;--pillHoverBg:#fff;--pillHoverText:#000;
+--navPrevBorder:#fff;--navPrevHover:rgba(255,255,255,.1);--navNextBg:#fff;--navNextText:#000;--navNextHover:#e6e6e6;--dotBorder:#fff;--dotOn:#fff;
+--overlayBg:rgba(0,0,0,.6);--briefBg:rgba(48,48,48,.96);--briefBody:#dedede;
+--vLab:#6f6f6b;--vMsg:#9a9a94;--vProg:#2a2a2a;--vProgFill:#cfcfc9;--replayOverlay:rgba(0,0,0,.55);--replayBtnBg:rgba(255,255,255,.16);--replayBtnHover:rgba(255,255,255,.3);
+color-scheme:dark}
+@media(prefers-color-scheme:light){:root{--stageBg:#eef0f2;--card:rgba(0,0,0,.05);--muted:rgb(110,113,102);--blue:rgb(63,92,209);
+--phoneBg:#fff;--text:#141414;--phoneBorder:#e2e2e2;--mediaBg1:#f1f1ef;--mediaBg2:#e7e7e4;--mediaBorder:#dcdcd8;--mediaLab:#7c7c74;--mediaSub:#9d9d95;
+--cardSurface:rgba(0,0,0,.03);--cardSurfaceHover:rgba(0,0,0,.055);--cardBorderA:rgba(0,0,0,.28);--cardBorderB:rgba(0,0,0,.04);--cardBorderC:rgba(0,0,0,.16);--cardShadowInset:rgba(255,255,255,.6);--cardShadow:rgba(0,0,0,.08);
+--pillBorder:#141414;--pillHoverBg:#141414;--pillHoverText:#fff;
+--navPrevBorder:#141414;--navPrevHover:rgba(0,0,0,.06);--navNextBg:#141414;--navNextText:#fff;--navNextHover:#000;--dotBorder:#141414;--dotOn:#141414;
+--overlayBg:rgba(0,0,0,.35);--briefBg:rgba(255,255,255,.98);--briefBody:#3a3a3a;
+--vLab:#9d9d95;--vMsg:#7c7c74;--vProg:#e0e0dc;--vProgFill:#8d8d85;--replayOverlay:rgba(255,255,255,.65);--replayBtnBg:rgba(20,20,20,.1);--replayBtnHover:rgba(20,20,20,.2);
+color-scheme:light}}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased}
+.stage{min-height:100vh;min-height:100dvh;background:var(--stageBg);display:flex;align-items:center;justify-content:center;padding:24px 0}
+.phone{position:relative;width:402px;height:874px;max-height:calc(100dvh - 48px);background:var(--phoneBg);color:var(--text);border-radius:46px;border:1px solid var(--phoneBorder);box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:hidden;display:flex;flex-direction:column}
+.scr{display:flex;flex-direction:column;height:100%;min-height:0}
+.scrHead{flex-shrink:0;padding:46px 24px 14px}
+.scrBody{flex:1;min-height:0;overflow-y:auto;padding:0 24px 24px}
+.scrBody::-webkit-scrollbar{display:none}
+.scrFoot{flex-shrink:0;padding:14px 24px 40px}
+.homeTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.logo{display:flex;flex-direction:column;gap:3px}
+.brand{font-family:'Inter',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1}
+.brandThin{font-weight:300}
+.logoSub{font-size:11px;color:var(--muted);letter-spacing:.5px}
+.homeTitle{font-size:18px;font-weight:700;white-space:nowrap}
+.hero{margin-top:16px;height:180px}
+.media{border-radius:20px;background:repeating-linear-gradient(135deg,var(--mediaBg1),var(--mediaBg1) 11px,var(--mediaBg2) 11px,var(--mediaBg2) 22px);border:1px solid var(--mediaBorder);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;color:var(--mediaLab)}
+.mediaLab{font-size:13px;font-weight:600;color:var(--mediaLab)}
+.mediaSub{font-family:'Inter',ui-monospace,monospace;font-size:10px;letter-spacing:.5px;color:var(--mediaSub)}
+.disclaim{font-size:11px;font-weight:500;color:var(--muted);margin:16px 0 12px;line-height:1.4}
+.card{position:relative;background:var(--cardSurface);-webkit-backdrop-filter:blur(28px) saturate(180%);backdrop-filter:blur(28px) saturate(180%);border:1px solid transparent;background-clip:padding-box;border-radius:20px;padding:15px 20px;display:flex;gap:15px;align-items:flex-start;margin-bottom:10px;box-shadow:0 1px 0 var(--cardShadowInset) inset,0 8px 24px var(--cardShadow)}
+.card::before{content:'';position:absolute;inset:0;border-radius:20px;padding:0.5px;background:linear-gradient(var(--tiltDeg,135deg),var(--cardBorderA),var(--cardBorderB) 35%,var(--cardBorderB) 65%,var(--cardBorderC));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;transition:background 60ms linear}
+.card.tap{cursor:pointer;transition:background .15s,transform .15s cubic-bezier(.2,.8,.2,1)}
+.card.tap:hover{background:var(--cardSurfaceHover);transform:scale(1.02)}
+.card.tap:active{transform:scale(1.05)}
+.cardIco{width:34px;height:34px;flex-shrink:0;color:var(--text);display:flex;align-items:center;justify-content:center}
+.cardMain{flex:1;min-width:0}
+.cardT{font-size:18px;font-weight:700;line-height:1.15}
+.cardD{font-size:11px;line-height:14px;color:var(--muted);white-space:pre-line;margin-top:4px}
+.cardTime{font-size:11px;color:var(--text);white-space:nowrap;flex-shrink:0;padding-top:2px}
+.flowHead{display:flex;align-items:center;gap:12px}
+.flowT{font-size:18px;font-weight:700;white-space:nowrap}
+.briefPill{border:1px solid var(--pillBorder);border-radius:11px;font-size:10px;line-height:1;padding:5px 8px;cursor:pointer;white-space:nowrap;background:transparent;color:var(--text)}
+.briefPill:hover{background:var(--pillHoverBg);color:var(--pillHoverText)}
+.spacer{flex:1}
+.iconBtn{cursor:pointer;color:var(--text);display:flex;align-items:center;padding:4px;margin:-4px}
+.flowMedia{height:338px;margin-bottom:6px}
+.stepTitle{font-size:28px;font-weight:700;line-height:1.12;letter-spacing:-.6px;margin:22px 0 14px}
+.lead{font-size:16px;line-height:1.5;color:var(--text);white-space:pre-line;margin:0 0 18px}
+.leadb{font-weight:700;color:var(--text)}
+.bullets{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.bullet{font-size:14px;line-height:1.45;color:var(--muted);padding-left:16px;position:relative}
+.bullet::before{content:'•';position:absolute;left:2px;top:0;color:var(--muted)}
+.bullet.note{color:var(--blue);margin-top:6px}
+.bullet.note::before{color:var(--blue)}
+.nav{display:grid;grid-template-columns:60px 1fr 60px;align-items:center;gap:10px}
+.navBtn{width:60px;height:60px;border-radius:30px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;cursor:pointer;user-select:none}
+.navPrev{border:1px solid var(--navPrevBorder);color:var(--text);background:transparent}
+.navPrev:hover{background:var(--navPrevHover)}
+.navNext{background:var(--navNextBg);color:var(--navNextText);justify-self:end}
+.navNext:hover{background:var(--navNextHover)}
+.dots{display:flex;gap:15px;justify-content:center;align-items:center}
+.dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--dotBorder);box-sizing:border-box}
+.dot.on{background:var(--dotOn)}
+.overlay{position:absolute;inset:0;background:var(--overlayBg);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9}
+.briefCard{width:100%;max-height:82%;overflow-y:auto;background:var(--briefBg);border-radius:40px;box-shadow:0 0 10px rgba(0,0,0,.25);padding:26px 24px;display:flex;flex-direction:column;gap:18px}
+.briefCard::-webkit-scrollbar{display:none}
+.briefTop{display:flex;align-items:center;justify-content:space-between}
+.briefTitle{font-size:24px;font-weight:700}
+.briefSec{display:flex;flex-direction:column;gap:5px}
+.briefStep{font-family:'Inter',monospace;font-size:11px;letter-spacing:1px;color:var(--muted)}
+.briefSecT{font-size:16px;font-weight:700}
+.briefSecB{font-size:14px;line-height:1.55;color:var(--briefBody);white-space:pre-line}
+.hex{width:100%;height:100%;color:inherit}
+.flowMedia{position:relative;overflow:hidden}
+.vLab{position:absolute;top:14px;left:16px;font-family:'Inter',monospace;font-size:11px;letter-spacing:.5px;color:var(--vLab)}
+.vState{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:13px}
+.vPlayIco{animation:vpulse 1.4s ease-in-out infinite}
+@keyframes vpulse{0%,100%{opacity:.45}50%{opacity:1}}
+.vMsg{font-size:13px;font-weight:600;color:var(--vMsg)}
+.vProg{width:130px;height:3px;border-radius:2px;background:var(--vProg);overflow:hidden}
+.vProg span{display:block;height:100%;width:0;background:var(--vProgFill);animation:vprog 3.6s linear forwards}
+@keyframes vprog{from{width:0}to{width:100%}}
+.replayWrap{cursor:pointer;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;background:var(--replayOverlay);backdrop-filter:blur(2px)}
+.replayBtn{width:62px;height:62px;border-radius:50%;border:1px solid var(--navPrevBorder);display:flex;align-items:center;justify-content:center;background:var(--replayBtnBg);box-shadow:0 4px 18px rgba(0,0,0,.3);transition:background .15s}
+.replayWrap:hover .replayBtn{background:var(--replayBtnHover)}
+.vReplay{color:var(--text);font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.stage.full{padding:0}
+.stage.full .phone{width:100vw;height:100vh;height:100dvh;max-height:none;border-radius:0;border:none;box-shadow:none}
+.vEl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+.imgFill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+@media(max-width:480px){.stage{padding:0}.phone{width:100vw;height:100vh;height:100dvh;max-height:none;border-radius:0;border:none;box-shadow:none}}
+</style>
+</helmet>
+<template id="__bundler_thumbnail" data-bg-color="#0e0e0e"><svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="800" fill="#0e0e0e"></rect><g fill="none" stroke="#ffffff" stroke-width="10"><path d="M600 300 L680 346 L680 438 L600 484 L520 438 L520 346 Z"></path><path d="M505 372 L560 404 L560 468 L505 500 L450 468 L450 404 Z"></path></g></svg></template>
+<div class="{{ stageCls }}">
+<div class="phone" style="{{ tiltStyle }}" onClick="{{ enableTilt }}">
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div class="scr">
+<div class="scrHead"><div class="homeTop"><div class="logo"><div class="brand">THEPURE <span class="brandThin">ICE FLO</span></div><div class="logoSub">더퓨어 아이스 플로</div></div><div class="homeTitle" style="text-transform: none">기본설정 변경하기</div></div></div>
+<div class="scrBody">
+<div class="media hero" style="background: url(&quot;./thepureiceflo_hero-ms0qkv2c-5i0c.png&quot;) center / cover no-repeat"><sc-if value="{{ hasHero }}" hint-placeholder-val=""><img class="imgFill" ref="{{ setHeroRef }}" alt=""></sc-if><sc-if value="{{ noHero }}" hint-placeholder-val="{{ true }}"><div class="mediaLab"><br></div></sc-if></div>
+<sc-if value="{{ showDisclaimer }}" hint-placeholder-val="{{ true }}"><div class="disclaim">아래 기능은 엔지니어 전용기능으로 사용에 주의해주셔야해요.</div></sc-if>
+<div class="card tap" onClick="{{ openIceSize }}"><div class="cardIco"><svg viewBox="0 0 32 21" class="hex"><path fill="currentColor" fill-rule="nonzero" transform="translate(14.168 0)" d="M 8.921 21 L 0 15.753 L 0 5.247 L 8.921 0 L 17.842 5.247 L 17.842 15.753 L 8.921 21 Z M 1.147 15.069 L 8.911 19.644 L 16.675 15.069 L 16.675 5.931 L 8.911 1.356 L 1.147 5.931 L 1.147 15.08 L 1.147 15.069 Z"></path><path fill="currentColor" fill-rule="nonzero" transform="translate(0 6.686)" d="M 6.079 14.314 L 0 10.733 L 0 3.581 L 6.079 0 L 12.159 3.581 L 12.159 10.733 L 6.079 14.314 Z M 1.147 10.06 L 6.069 12.958 L 10.991 10.06 L 10.991 4.264 L 6.069 1.366 L 1.147 4.264 L 1.147 10.06 Z"></path></svg></div><div class="cardMain"><div class="cardT">얼음 크기 변경</div><div class="cardD">기본설정은 작은얼음(8g)이에요.
+큰얼음(11g)으로 변경할 수 있어요.</div></div><div class="cardTime">30초-1분 소요</div></div>
+<div class="card tap" onClick="{{ openStorage }}"><div class="cardIco"><svg viewBox="0 0 34 30" class="hex"><path fill="currentColor" fill-rule="nonzero" transform="translate(9.4 0)" d="M 11.435 13.318 L 3.812 13.318 L 0 6.652 L 3.812 0 L 11.435 0 L 15.247 6.652 L 11.435 13.304 Z M 4.723 11.732 L 10.538 11.732 L 13.452 6.652 L 10.538 1.573 L 4.723 1.573 L 1.809 6.652 Z"></path><path fill="currentColor" fill-rule="nonzero" transform="translate(1.6 15.5)" d="M 11.435 13.318 L 3.812 13.318 L 0 6.652 L 3.812 0 L 11.435 0 L 15.247 6.652 L 11.435 13.304 Z M 4.723 11.732 L 10.538 11.732 L 13.452 6.652 L 10.538 1.573 L 4.723 1.573 L 1.809 6.652 Z"></path><path fill="currentColor" fill-rule="nonzero" transform="translate(17.2 15.5)" d="M 11.435 13.318 L 3.812 13.318 L 0 6.652 L 3.812 0 L 11.435 0 L 15.247 6.652 L 11.435 13.304 Z M 4.723 11.732 L 10.538 11.732 L 13.452 6.652 L 10.538 1.573 L 4.723 1.573 L 1.809 6.652 Z"></path></svg></div><div class="cardMain"><div class="cardT">얼음 저장량 변경</div><div class="cardD">기본설정은 맥스모드(만빙)이에요.
+일반모드(중빙)로 변경할 수 있어요.</div></div><div class="cardTime">30초-1분 소요</div></div>
+<div class="card tap" onClick="{{ openHot }}"><div class="cardIco"><svg viewBox="0 0 26.07 20.12" class="hex" fill="currentColor" fill-rule="nonzero"><path transform="translate(0 5.78)" d="M 1.13 13.77 L 0 13.77 L 0 11.39 C 0 9.74 0.48 8.25 0.94 6.81 C 1.38 5.43 1.8 4.12 1.8 2.73 L 1.8 0 L 2.93 0 L 2.93 2.73 C 2.93 4.29 2.46 5.75 2.01 7.15 C 1.55 8.57 1.12 9.92 1.12 11.39 L 1.12 13.77 Z"></path><path transform="translate(2.807 5.78)" d="M 1.13 13.77 L 0 13.77 L 0 11.39 C 0 9.74 0.48 8.25 0.94 6.81 C 1.38 5.43 1.8 4.12 1.8 2.73 L 1.8 0 L 2.93 0 L 2.93 2.73 C 2.93 4.29 2.46 5.75 2.01 7.15 C 1.55 8.57 1.12 9.92 1.12 11.39 L 1.12 13.77 Z"></path><path transform="translate(5.613 5.78)" d="M 1.13 13.77 L 0 13.77 L 0 11.39 C 0 9.74 0.48 8.25 0.94 6.81 C 1.38 5.43 1.8 4.12 1.8 2.73 L 1.8 0 L 2.93 0 L 2.93 2.73 C 2.93 4.29 2.46 5.75 2.01 7.15 C 1.55 8.57 1.12 9.92 1.12 11.39 L 1.12 13.77 Z"></path><path transform="translate(8.42 5.78)" d="M 1.13 13.77 L 0 13.77 L 0 11.39 C 0 9.74 0.48 8.25 0.94 6.81 C 1.38 5.43 1.8 4.12 1.8 2.73 L 1.8 0 L 2.93 0 L 2.93 2.73 C 2.93 4.29 2.46 5.75 2.01 7.15 C 1.55 8.57 1.12 9.92 1.12 11.39 L 1.12 13.77 Z"></path><path transform="translate(13.33 0)" d="M 4.39 20.12 C 1.97 20.12 0 18.15 0 15.74 C 0 14.18 0.81 12.78 2.15 11.99 L 2.15 2.24 C 2.15 1.01 3.15 0 4.39 0 C 5.63 0 6.63 1 6.63 2.24 L 6.63 11.98 C 7.96 12.77 8.78 14.18 8.78 15.73 C 8.78 18.15 6.81 20.11 4.39 20.11 Z M 4.39 1.13 C 3.78 1.13 3.28 1.63 3.28 2.23 L 3.28 12.66 L 2.96 12.82 C 1.83 13.37 1.13 14.49 1.13 15.73 C 1.13 17.52 2.59 18.98 4.38 18.98 C 6.17 18.98 7.63 17.52 7.63 15.73 C 7.63 14.49 6.93 13.38 5.8 12.82 L 5.48 12.66 L 5.48 2.24 C 5.48 1.63 4.98 1.14 4.37 1.14 Z"></path><circle cx="17.72" cy="15.71" r="1.48"></circle><circle cx="23.52" cy="2.55" r="1.99" fill="none" stroke="currentColor" stroke-width="1.13"></circle></svg></div><div class="cardMain"><div class="cardT">온수 온도 변경</div><div class="cardD">기본설정은 저온(약 75-85℃)이에요.
+고온(약 85-92℃)으로 변경할 수 있어요.</div></div><div class="cardTime">30초-1분 소요</div></div>
+<div class="card tap" onClick="{{ openCold }}"><div class="cardIco"><svg viewBox="0 0 27.49 20.12" class="hex" fill="currentColor" fill-rule="nonzero"><g fill="none" stroke="currentColor" stroke-width="0.95" stroke-linecap="round"><line x1="6.25" y1="6.37" x2="6.25" y2="18.96"></line><line x1="3.1" y1="7.2" x2="9.4" y2="18.13"></line><line x1="9.4" y1="7.2" x2="3.1" y2="18.13"></line></g><path transform="translate(14.75 0)" d="M 4.39 20.12 C 1.97 20.12 0 18.15 0 15.74 C 0 14.18 0.81 12.78 2.15 11.99 L 2.15 2.24 C 2.15 1.01 3.15 0 4.39 0 C 5.63 0 6.63 1 6.63 2.24 L 6.63 11.98 C 7.96 12.77 8.78 14.18 8.78 15.73 C 8.78 18.15 6.81 20.11 4.39 20.11 Z M 4.39 1.13 C 3.78 1.13 3.28 1.63 3.28 2.23 L 3.28 12.66 L 2.96 12.82 C 1.83 13.37 1.13 14.49 1.13 15.73 C 1.13 17.52 2.59 18.98 4.38 18.98 C 6.17 18.98 7.63 17.52 7.63 15.73 C 7.63 14.49 6.93 13.38 5.8 12.82 L 5.48 12.66 L 5.48 2.24 C 5.48 1.63 4.98 1.14 4.37 1.14 Z"></path><circle cx="19.14" cy="15.71" r="1.48"></circle><circle cx="24.94" cy="2.55" r="1.99" fill="none" stroke="currentColor" stroke-width="1.13"></circle></svg></div><div class="cardMain"><div class="cardT">냉수 온도 변경</div><div class="cardD">기본설정은 강냉(약 4-8℃)이에요.
+약냉(약 5-10℃)으로 변경할 수 있어요.</div></div><div class="cardTime">30초-1분 소요</div></div>
+<div class="card tap" onClick="{{ openEtc }}"><div class="cardIco"><svg viewBox="0 0 32 32" class="hex"><circle cx="16" cy="16" r="15.2" fill="none" stroke="currentColor" stroke-width="1.3"></circle><text x="16" y="19" text-anchor="middle" font-size="8" font-weight="700" font-family="Inter" fill="currentColor">MORE</text></svg></div><div class="cardMain"><div class="cardT">기타 설정</div><div class="cardD">초기화, 수위확인, 즉시 제빙모드 에러코드 표</div></div></div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ isEtc }}"><div class="scr">
+<div class="scrHead"><div class="flowHead"><div class="flowT">기타 설정</div><div class="spacer"></div><div class="iconBtn" onClick="{{ home }}"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg></div></div></div>
+<div class="scrBody">
+<div class="disclaim">아래 기능은 엔지니어 전용기능으로 사용에 주의해주셔야해요.</div>
+<div class="card"><div class="cardIco"><svg viewBox="0 0 32 21" class="hex"><path fill="currentColor" fill-rule="nonzero" transform="translate(14.168 0)" d="M 8.921 21 L 0 15.753 L 0 5.247 L 8.921 0 L 17.842 5.247 L 17.842 15.753 L 8.921 21 Z M 1.147 15.069 L 8.911 19.644 L 16.675 15.069 L 16.675 5.931 L 8.911 1.356 L 1.147 5.931 L 1.147 15.08 Z"></path><path fill="currentColor" fill-rule="nonzero" transform="translate(0 6.686)" d="M 6.079 14.314 L 0 10.733 L 0 3.581 L 6.079 0 L 12.159 3.581 L 12.159 10.733 L 6.079 14.314 Z M 1.147 10.06 L 6.069 12.958 L 10.991 10.06 L 10.991 4.264 L 6.069 1.366 L 1.147 4.264 Z"></path></svg></div><div class="cardMain"><div class="cardT">설정 초기화하기</div><div class="cardD">설정을 초기화할 수 있어요.
+전원 차단후 공급과 동일해요.</div></div><div class="cardTime">30초 소요</div></div>
+<div class="card"><div class="cardIco"><svg viewBox="0 0 34 30" class="hex"><path fill="currentColor" fill-rule="nonzero" transform="translate(9.4 0)" d="M 11.435 13.318 L 3.812 13.318 L 0 6.652 L 3.812 0 L 11.435 0 L 15.247 6.652 L 11.435 13.304 Z M 4.723 11.732 L 10.538 11.732 L 13.452 6.652 L 10.538 1.573 L 4.723 1.573 L 1.809 6.652 Z"></path><path fill="currentColor" fill-rule="nonzero" transform="translate(1.6 15.5)" d="M 11.435 13.318 L 3.812 13.318 L 0 6.652 L 3.812 0 L 11.435 0 L 15.247 6.652 L 11.435 13.304 Z M 4.723 11.732 L 10.538 11.732 L 13.452 6.652 L 10.538 1.573 L 4.723 1.573 L 1.809 6.652 Z"></path><path fill="currentColor" fill-rule="nonzero" transform="translate(17.2 15.5)" d="M 11.435 13.318 L 3.812 13.318 L 0 6.652 L 3.812 0 L 11.435 0 L 15.247 6.652 L 11.435 13.304 Z M 4.723 11.732 L 10.538 11.732 L 13.452 6.652 L 10.538 1.573 L 4.723 1.573 L 1.809 6.652 Z"></path></svg></div><div class="cardMain"><div class="cardT">수위 확인하기</div><div class="cardD">제빙수 수위를 확인할 수 있어요.
+20분간 확인이 가능해요.</div></div><div class="cardTime">30초-1분 소요</div></div>
+<div class="card"><div class="cardIco"><svg viewBox="0 0 27.49 20.12" class="hex" fill="currentColor" fill-rule="nonzero"><g fill="none" stroke="currentColor" stroke-width="0.95" stroke-linecap="round"><line x1="6.25" y1="6.37" x2="6.25" y2="18.96"></line><line x1="3.1" y1="7.2" x2="9.4" y2="18.13"></line><line x1="9.4" y1="7.2" x2="3.1" y2="18.13"></line></g><path transform="translate(14.75 0)" d="M 4.39 20.12 C 1.97 20.12 0 18.15 0 15.74 C 0 14.18 0.81 12.78 2.15 11.99 L 2.15 2.24 C 2.15 1.01 3.15 0 4.39 0 C 5.63 0 6.63 1 6.63 2.24 L 6.63 11.98 C 7.96 12.77 8.78 14.18 8.78 15.73 C 8.78 18.15 6.81 20.11 4.39 20.11 Z M 4.39 1.13 C 3.78 1.13 3.28 1.63 3.28 2.23 L 3.28 12.66 L 2.96 12.82 C 1.83 13.37 1.13 14.49 1.13 15.73 C 1.13 17.52 2.59 18.98 4.38 18.98 C 6.17 18.98 7.63 17.52 7.63 15.73 C 7.63 14.49 6.93 13.38 5.8 12.82 L 5.48 12.66 L 5.48 2.24 C 5.48 1.63 4.98 1.14 4.37 1.14 Z"></path><circle cx="19.14" cy="15.71" r="1.48"></circle><circle cx="24.94" cy="2.55" r="1.99" fill="none" stroke="currentColor" stroke-width="1.13"></circle></svg></div><div class="cardMain"><div class="cardT">즉시제빙모드 설정하기</div><div class="cardD">초기화 또는 전원 재인가 하였을 때
+제빙대기(2-3분)하지 않아도 돼요.</div></div><div class="cardTime">30초 소요</div></div>
+<div class="card"><div class="cardIco"><svg viewBox="0 0 27.49 20.12" class="hex" fill="currentColor" fill-rule="nonzero"><g fill="none" stroke="currentColor" stroke-width="0.95" stroke-linecap="round"><line x1="6.25" y1="6.37" x2="6.25" y2="18.96"></line><line x1="3.1" y1="7.2" x2="9.4" y2="18.13"></line><line x1="9.4" y1="7.2" x2="3.1" y2="18.13"></line></g><path transform="translate(14.75 0)" d="M 4.39 20.12 C 1.97 20.12 0 18.15 0 15.74 C 0 14.18 0.81 12.78 2.15 11.99 L 2.15 2.24 C 2.15 1.01 3.15 0 4.39 0 C 5.63 0 6.63 1 6.63 2.24 L 6.63 11.98 C 7.96 12.77 8.78 14.18 8.78 15.73 C 8.78 18.15 6.81 20.11 4.39 20.11 Z M 4.39 1.13 C 3.78 1.13 3.28 1.63 3.28 2.23 L 3.28 12.66 L 2.96 12.82 C 1.83 13.37 1.13 14.49 1.13 15.73 C 1.13 17.52 2.59 18.98 4.38 18.98 C 6.17 18.98 7.63 17.52 7.63 15.73 C 7.63 14.49 6.93 13.38 5.8 12.82 L 5.48 12.66 L 5.48 2.24 C 5.48 1.63 4.98 1.14 4.37 1.14 Z"></path><circle cx="19.14" cy="15.71" r="1.48"></circle><circle cx="24.94" cy="2.55" r="1.99" fill="none" stroke="currentColor" stroke-width="1.13"></circle></svg></div><div class="cardMain"><div class="cardT">교반작동 설정하기</div><div class="cardD">기본설정은 교반 작동멈춤이에요.
+교반 작동으로 변경할 수 있어요.</div></div><div class="cardTime">30초-1분 소요</div></div>
+<div class="card"><div class="cardIco"><svg viewBox="0 0 32 32" class="hex"><circle cx="16" cy="16" r="15.2" fill="none" stroke="currentColor" stroke-width="1.3"></circle><text x="16" y="19" text-anchor="middle" font-size="8" font-weight="700" font-family="Inter" fill="currentColor">MORE</text></svg></div><div class="cardMain"><div class="cardT">에러코드표</div><div class="cardD">진단모드에서 LED 상태로
+에러를 확인할 수 있어요.</div></div></div>
+</div>
+</div></sc-if>
+<sc-if value="{{ isFlow }}"><div class="scr">
+<div class="scrHead"><div class="flowHead"><div class="flowT">{{ flowTitle }}</div><div class="briefPill" onClick="{{ toggleBrief }}">간략하게 보기</div><div class="spacer"></div><div class="iconBtn" onClick="{{ home }}"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg></div></div></div>
+<div class="scrBody">
+<div class="media flowMedia"><sc-if value="{{ hasVideo }}" hint-placeholder-val=""><video class="vEl" ref="{{ setVideoRef }}" key="{{ videoKey }}" autoplay="" muted="" playsinline="" onEnded="{{ onVideoEnded }}" onLoadedMetadata="{{ setVideoSpeed }}"></video><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replay }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if><sc-if value="{{ noVideo }}" hint-placeholder-val="{{ true }}"><sc-if value="{{ isPlaying }}" hint-placeholder-val="{{ true }}"><div class="vState"><div class="vPlayIco"><svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#8a8a86" stroke-width="2"><circle cx="24" cy="24" r="21"></circle><path d="M20 17l12 7-12 7z" fill="#8a8a86" stroke="none"></path></svg></div><div class="vMsg">재생 중</div><div class="vProg"><span></span></div></div></sc-if><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replay }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if></div>
+<h1 class="stepTitle">{{ step.title }}</h1>
+<p class="lead"><b class="leadb">{{ step.leadBold }}</b>{{ step.lead }}</p>
+<ul class="bullets"><sc-for list="{{ step.bullets }}" as="b" hint-placeholder-count="2"><li class="bullet">{{ b }}</li></sc-for><sc-if value="{{ step.note }}" hint-placeholder-val=""><li class="bullet note">{{ step.note }}</li></sc-if></ul>
+</div>
+<div class="scrFoot"><div class="nav"><div class="navBtn navPrev" onClick="{{ prev }}">이전</div><div class="dots"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="4"><span class="{{ d.cls }}"></span></sc-for></div><div class="navBtn navNext" onClick="{{ next }}">다음</div></div></div>
+</div></sc-if>
+<sc-if value="{{ brief }}" hint-placeholder-val=""><div class="overlay" onClick="{{ toggleBrief }}"><div class="briefCard" onClick="{{ stop }}"><div class="briefTop"><div class="briefTitle">{{ flowTitle }}</div><div class="iconBtn" onClick="{{ toggleBrief }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg></div></div><sc-for list="{{ briefSections }}" as="s" hint-placeholder-count="4"><div class="briefSec"><div class="briefStep">{{ s.step }}</div><div class="briefSecT">{{ s.title }}</div><div class="briefSecB">{{ s.body }}</div></div></sc-for></div></div></sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:503,&quot;height&quot;:960},&quot;deviceChrome&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;phone&quot;,&quot;full&quot;],&quot;default&quot;:&quot;phone&quot;,&quot;tsType&quot;:&quot;'phone'|'full'&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;showDisclaimer&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+class Component extends DCLogic {
+  state = { screen: 'home', flow: null, step: 0, brief: false, videoState: 'playing', nonce: 0, tiltDeg: 135 };
+
+  componentDidMount() {
+    this._onOrient = (e) => {
+      const beta = e.beta ?? 0, gamma = e.gamma ?? 0;
+      const deg = 135 + gamma * 1.4 + beta * 0.4;
+      this.setState({ tiltDeg: deg });
+    };
+    window.addEventListener('deviceorientation', this._onOrient);
+  }
+  enableTilt() {
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission().catch(() => {});
+    }
+  }
+  VIDEO_MS = 3600;
+  VIDEO_SPEED = 1;
+
+  // ── 미디어 파일 경로 (assets/ 폴더에 넣으세요. 비워두면 플레이스홀더 표시) ──
+  // 이미지: jpg/png/webp · 영상: mp4/webm (무음·autoplay 대상이므로 muted 재생됩니다)
+  MEDIA = {
+    product: '', // 홈 화면 제품 이미지 (예: 'assets/product.jpg')
+    iceSize:    ['assets/step1-diagnostic.mp4', 'assets/step2-function.mp4', 'assets/step3-ice.mp4', 'assets/step4-done.mp4'],
+    iceStorage: ['assets/step1-diagnostic.mp4', 'assets/step2-function.mp4', 'assets/step3-icestorage.mp4', 'assets/step4-done.mp4'],
+    hotTemp:    ['assets/step1-diagnostic.mp4', 'assets/step2-function.mp4', 'assets/step3-hot.mp4', 'assets/step4-done.mp4'],
+    coldTemp:   ['assets/step1-diagnostic.mp4', 'assets/step2-function.mp4', 'assets/step3-cold.mp4', 'assets/step4-done.mp4'],
+  };
+  curVideoSrc() {
+    const arr = this.MEDIA[this.state.flow];
+    return (arr && arr[this.state.step]) || '';
+  }
+
+  componentWillUnmount() { clearTimeout(this._vt); window.removeEventListener('deviceorientation', this._onOrient); }
+  playVideo() {
+    clearTimeout(this._vt);
+    this.setState(s => ({ videoState: 'playing', nonce: s.nonce + 1 }));
+    // 실제 영상이 있으면 <video> 의 onEnded 이벤트로 종료를 감지하고,
+    // 없으면 플레이스홀더용으로 재생 시간을 시뮬레이션합니다.
+    if (!this.curVideoSrc()) {
+      this._vt = setTimeout(() => this.setState({ videoState: 'ended' }), this.VIDEO_MS);
+    }
+  }
+
+  get flows() {
+    const DIAG = { title: '진단모드로 진입하세요.', leadBold: '얼음가득 버튼', lead: '을 5초간 길게 눌러주세요.\n완료 시 삑소리가 납니다.\n얼음가득 LED 점멸을 확인해주세요.', bullets: ['나머지 아이콘은 소등되어 있어야 정상상태에요. 나머지 아이콘 점멸 시 ‘에러코드표’를 확인 및 조치하세요.', '20초 동안 터치가 없을 시 처음 상태로 복귀해요.'], note: '얼음가득 LED가 점멸되지않나요? 고객만족센터로 문의해주세요.' };
+    const FUNC = { title: '기능모드로 진입하세요.', leadBold: '정량 버튼', lead: '을 짧게 3회 눌러주세요.\n한번 누를 때마다 삑소리가 납니다.\n정량 LED 점멸을 확인해주세요.', bullets: ['20초 동안 터치가 없을 경우에는 처음 상태로 복귀해요.'], note: '정량 LED가 점멸되지않나요? 고객만족센터로 문의해주세요.' };
+    const DONE = { title: '설정을 완료하세요.', leadBold: '정량 버튼', lead: '을 1회 눌러 기능모드를 종료하세요.\n얼음가득 버튼을 1회 눌러 진단모드를 종료하세요.', bullets: ['20초 동안 터치가 없을 경우에는 처음 상태로 복귀해요.'], note: '' };
+    return {
+      iceSize: { headerTitle: '얼음 크기 변경하기', steps: [DIAG, FUNC,
+        { title: '얼음모드를 설정하세요.', leadBold: '얼음 버튼', lead: '을 눌러 얼음모드를 전환하세요.\n얼음 버튼을 1회 누르면 모드가 전환됩니다.\n얼음 LED가 소등되어있으면 ‘작은얼음’입니다.\n얼음 LED가 점등되어있으면 ‘큰얼음’입니다.', bullets: ['작은얼음 설정 시 약 8g의 얼음이 생성돼요. 큰얼음 설정 시 약 11g의 얼음이 생성돼요.', '변경된 얼음은 바로 출빙되지 않아요. 생성된 얼음을 사용해주세요.', '20초 동안 터치가 없을 경우에는 처음 상태로 복귀해요.'], note: '' }, DONE] },
+      iceStorage: { headerTitle: '얼음 저장량 변경하기', steps: [DIAG, FUNC,
+        { title: '얼음 저장량을 설정하세요.', leadBold: '얼음가득 버튼', lead: '을 눌러 얼음저장량을 전환하세요.\n얼음가득 버튼을 1회 누르면 모드가 전환됩니다.\n얼음가득 LED가 소등되어있으면 ‘일반모드’입니다.\n얼음가득 LED가 점등되어있으면 ‘맥스모드’입니다.', bullets: ['일반모드 설정 시 중빙센서가 활성화되어 70% 저장해요. 맥스모드 설정 시 만빙센서가 활성화되어 100% 저장해요.', '20초 동안 터치가 없을 경우에는 처음 상태로 복귀해요.'], note: '' }, DONE] },
+      hotTemp: { headerTitle: '온수 온도 변경하기', steps: [DIAG, FUNC,
+        { title: '온수 온도를 설정하세요.', leadBold: '온수 버튼', lead: '을 눌러 온수온도를 변경하세요.\n온수 버튼을 1회 누르면 모드가 전환됩니다.\n온수 LED가 소등되어있으면 ‘저온’입니다.\n온수 LED가 점등되어있으면 ‘고온’입니다.', bullets: ['저온 설정 시 온수온도는 약 75-85℃를 유지해요. 고온 설정 시 온수온도는 약 95℃를 유지해요.', '온수 온도는 즉시 변하지 않아요. 약 10분 간 기다려주세요.', '20초 동안 터치가 없을 경우에는 처음 상태로 복귀해요.'], note: '' }, DONE] },
+      coldTemp: { headerTitle: '냉수 온도 변경하기', steps: [DIAG, FUNC,
+        { title: '냉수 온도를 설정하세요.', leadBold: '냉수 버튼', lead: '을 눌러 냉수온도를 전환하세요.\n냉수 버튼을 1회 누르면 모드가 전환됩니다.\n냉수 LED가 소등되어있으면 ‘약냉’입니다.\n냉수 LED가 점등되어있으면 ‘강냉’입니다.', bullets: ['약냉 설정 시 냉수온도는 약 5-10℃를 유지해요. 강냉 설정 시 냉수온도는 약 4-8℃를 유지해요.', '20초 동안 터치가 없을 경우에는 처음 상태로 복귀해요.'], note: '' }, DONE] },
+    };
+  }
+
+  openFlow(key) { this.setState({ screen: 'flow', flow: key, step: 0, brief: false }); this.playVideo(); }
+  go(screen) { clearTimeout(this._vt); this.setState({ screen, brief: false }); }
+  next() {
+    const f = this.flows[this.state.flow];
+    if (this.state.step < f.steps.length - 1) { this.setState({ step: this.state.step + 1 }); this.playVideo(); }
+    else this.go('home');
+  }
+  prev() {
+    if (this.state.step > 0) { this.setState({ step: this.state.step - 1 }); this.playVideo(); }
+    else this.go('home');
+  }
+
+  renderVals() {
+    const s = this.state;
+    const flow = s.flow ? this.flows[s.flow] : null;
+    const videoSrc = this.curVideoSrc();
+    const st = flow ? flow.steps[s.step] : null;
+    const step = st ? { title: st.title, leadBold: st.leadBold, lead: st.lead, bullets: st.bullets, note: st.note } : { title: '', leadBold: '', lead: '', bullets: [], note: '' };
+    const dots = flow ? flow.steps.map((_, i) => ({ cls: i === s.step ? 'dot on' : 'dot' })) : [];
+    const briefSections = flow ? flow.steps.map((x, i) => ({ step: 'STEP 0' + (i + 1), title: x.title, body: x.leadBold + x.lead })) : [];
+    const chrome = this.props.deviceChrome ?? 'phone';
+    return {
+      isHome: s.screen === 'home', isEtc: s.screen === 'etc', isFlow: s.screen === 'flow',
+      brief: s.brief,
+      isPlaying: s.screen === 'flow' && s.videoState === 'playing',
+      isEnded: s.screen === 'flow' && s.videoState === 'ended',
+      replay: () => this.playVideo(),
+      hasHero: !!this.MEDIA.product,
+      noHero: !this.MEDIA.product,
+      heroSrc: this.MEDIA.product,
+      hasVideo: !!videoSrc,
+      noVideo: !videoSrc,
+      videoSrc,
+      videoKey: s.flow + '-' + s.step + '-' + s.nonce,
+      onVideoEnded: () => this.setState({ videoState: 'ended' }),
+      setVideoSpeed: (e) => { e.target.playbackRate = this.VIDEO_SPEED; },
+      setVideoRef: (el) => { if (el && videoSrc) el.src = videoSrc; },
+      setHeroRef: (el) => { if (el && this.MEDIA.product) el.src = this.MEDIA.product; },
+      showDisclaimer: this.props.showDisclaimer ?? true,
+      tiltStyle: { '--tiltDeg': s.tiltDeg + 'deg' },
+      enableTilt: () => this.enableTilt(),
+      stageCls: chrome === 'full' ? 'stage full' : 'stage',
+      flowTitle: flow ? flow.headerTitle : '',
+      step, dots, briefSections,
+      openIceSize: () => this.openFlow('iceSize'),
+      openStorage: () => this.openFlow('iceStorage'),
+      openHot: () => this.openFlow('hotTemp'),
+      openCold: () => this.openFlow('coldTemp'),
+      openEtc: () => this.go('etc'),
+      home: () => this.go('home'),
+      next: () => this.next(),
+      prev: () => this.prev(),
+      toggleBrief: () => this.setState({ brief: !this.state.brief }),
+      stop: (e) => { e.stopPropagation(); },
+    };
+  }
+}
+</script>
+</body>
+</html>
