@@ -107,8 +107,11 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 .replayWrap:hover .replayBtn{background:var(--replayBtnHover)}
 .vReplay{color:var(--text);font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.3)}
 .pauseIco{width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center}
+.loadingWrap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--mediaBg1)}
+.spinner{width:34px;height:34px;border-radius:50%;border:3px solid var(--mediaBorder);border-top-color:var(--mediaLab);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 .stage.full .phone{max-width:none}
-.vEl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+.vEl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--mediaBg1)}
 .imgFill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 </style>
 </helmet>
@@ -151,7 +154,7 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 </div></sc-if>
 <sc-if value="{{ isFlow }}"><div class="scr">
 <div class="scrHead"><div class="flowHead"><div class="flowT">{{ flowTitle }}</div><div class="briefPill" onClick="{{ toggleBrief }}">간략하게 보기</div><div class="spacer"></div><div class="iconBtn" onClick="{{ home }}"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg></div></div></div>
-<div class="media flowMedia" onClick="{{ togglePause }}" style="cursor:pointer"><sc-if value="{{ hasVideo }}" hint-placeholder-val=""><video class="vEl" ref="{{ setVideoRef }}" key="{{ videoKey }}" autoplay="" muted="" playsinline="" preload="auto" onEnded="{{ onVideoEnded }}" onLoadedMetadata="{{ setVideoSpeed }}"></video><sc-if value="{{ showPauseIcon }}" hint-placeholder-val=""><div class="vState"><div class="pauseIco"><svg viewBox="0 0 24 24" width="40" height="40" fill="#fff"><rect x="5" y="4" width="5" height="16" rx="1"></rect><rect x="14" y="4" width="5" height="16" rx="1"></rect></svg></div></div></sc-if><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replay }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if><sc-if value="{{ noVideo }}" hint-placeholder-val="{{ true }}"><sc-if value="{{ isPlaying }}" hint-placeholder-val="{{ true }}"><div class="vState"><div class="vPlayIco"><svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#8a8a86" stroke-width="2"><circle cx="24" cy="24" r="21"></circle><path d="M20 17l12 7-12 7z" fill="#8a8a86" stroke="none"></path></svg></div><div class="vMsg">재생 중</div><div class="vProg"><span></span></div></div></sc-if><sc-if value="{{ showPauseIcon }}" hint-placeholder-val=""><div class="vState"><div class="pauseIco"><svg viewBox="0 0 24 24" width="40" height="40" fill="#fff"><rect x="5" y="4" width="5" height="16" rx="1"></rect><rect x="14" y="4" width="5" height="16" rx="1"></rect></svg></div></div></sc-if><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replay }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if></div>
+<div class="media flowMedia" onClick="{{ togglePause }}" style="cursor:pointer"><sc-if value="{{ hasVideo }}" hint-placeholder-val=""><video class="vEl" ref="{{ setVideoRef }}" key="{{ videoKey }}" autoplay="" muted="" playsinline="" preload="auto" onEnded="{{ onVideoEnded }}" onLoadedMetadata="{{ setVideoSpeed }}" onPlaying="{{ onVideoPlaying }}" onWaiting="{{ onVideoWaiting }}"></video><sc-if value="{{ showPauseIcon }}" hint-placeholder-val=""><div class="vState"><div class="pauseIco"><svg viewBox="0 0 24 24" width="40" height="40" fill="#fff"><rect x="5" y="4" width="5" height="16" rx="1"></rect><rect x="14" y="4" width="5" height="16" rx="1"></rect></svg></div></div></sc-if><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replayClick }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if><sc-if value="{{ noVideo }}" hint-placeholder-val="{{ true }}"><sc-if value="{{ isPlaying }}" hint-placeholder-val="{{ true }}"><div class="vState"><div class="vPlayIco"><svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#8a8a86" stroke-width="2"><circle cx="24" cy="24" r="21"></circle><path d="M20 17l12 7-12 7z" fill="#8a8a86" stroke="none"></path></svg></div><div class="vMsg">재생 중</div><div class="vProg"><span></span></div></div></sc-if><sc-if value="{{ showPauseIcon }}" hint-placeholder-val=""><div class="vState"><div class="pauseIco"><svg viewBox="0 0 24 24" width="40" height="40" fill="#fff"><rect x="5" y="4" width="5" height="16" rx="1"></rect><rect x="14" y="4" width="5" height="16" rx="1"></rect></svg></div></div></sc-if><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replayClick }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if></div>
 <div class="scrBody" style="padding-top:6px;padding-bottom:110px">
 <h1 class="stepTitle">{{ step.title }}</h1>
 <p class="lead"><b class="leadb">{{ step.leadBold }}</b>{{ step.lead }}</p>
@@ -219,16 +222,18 @@ class Component extends DCLogic {
   }
   playVideo() {
     clearTimeout(this._vt);
-    this.setState(s => ({ videoState: 'playing', nonce: s.nonce + 1 }));
+    const hasSrc = !!this.curVideoSrc();
+    this.setState(s => ({ videoState: hasSrc ? 'loading' : 'playing', nonce: s.nonce + 1 }));
     this.prefetchNextVideo();
-    // 실제 영상이 있으면 <video> 의 onEnded 이벤트로 종료를 감지하고,
+    // 실제 영상이 있으면 onPlaying/onEnded 이벤트로 상태를 감지하고,
     // 없으면 플레이스홀더용으로 재생 시간을 시뮬레이션합니다.
-    if (!this.curVideoSrc()) {
+    if (!hasSrc) {
       this._vt = setTimeout(() => this.onVideoEnd(), this.VIDEO_MS);
     }
   }
   togglePause() {
     if (this.state.videoState === 'ended') return;
+    if (this.state.videoState === 'loading') return;
     if (this.curVideoSrc() && this._videoEl) {
       if (this._videoEl.paused) { this._videoEl.play().catch(() => {}); this.setState({ videoState: 'playing' }); }
       else { this._videoEl.pause(); this.setState({ videoState: 'paused' }); }
@@ -281,9 +286,11 @@ class Component extends DCLogic {
     return {
       isHome: s.screen === 'home', isEtc: s.screen === 'etc', isFlow: s.screen === 'flow',
       brief: s.brief,
-      isPlaying: s.screen === 'flow' && s.videoState === 'playing',
+      isPlaying: s.screen === 'flow' && s.videoState === 'playing' && !videoSrc,
       isEnded: s.screen === 'flow' && s.videoState === 'ended',
-      replay: () => this.playVideo(),
+      showLoading: s.screen === 'flow' && s.videoState === 'loading' && !!videoSrc,
+replay: () => this.playVideo(),
+      replayClick: (e) => { e.stopPropagation(); this.playVideo(); },
       hasHero: !!this.MEDIA.product,
       noHero: !this.MEDIA.product,
       heroSrc: this.MEDIA.product,
@@ -292,6 +299,8 @@ class Component extends DCLogic {
       videoSrc,
       videoKey: s.flow + '-' + s.step + '-' + s.nonce,
       onVideoEnded: () => this.onVideoEnd(),
+      onVideoPlaying: () => { if (this.state.videoState === 'loading') this.setState({ videoState: 'playing' }); },
+      onVideoWaiting: () => { if (this.state.videoState === 'playing') this.setState({ videoState: 'loading' }); },
       setVideoSpeed: (e) => { e.target.playbackRate = this.VIDEO_SPEED; },
       setVideoRef: (el) => {
         this._videoEl = el;
