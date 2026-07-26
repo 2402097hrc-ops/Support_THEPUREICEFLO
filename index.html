@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -11,11 +12,26 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
 <style>
-:root{--stageBg:#0e0e0e;--card:rgba(64,64,64,0.2);--muted:rgb(194,194,179);--blue:rgb(103,133,233)}
+:root{--stageBg:#0e0e0e;--card:rgba(64,64,64,0.2);--muted:rgb(194,194,179);--blue:rgb(103,133,233);
+--phoneBg:#000;--text:#fff;--phoneBorder:#1c1c1c;--mediaBg1:#131313;--mediaBg2:#191919;--mediaBorder:#232323;--mediaLab:#9a9a94;--mediaSub:#5f5f5c;
+--cardSurface:rgba(255,255,255,.035);--cardSurfaceHover:rgba(255,255,255,.07);--cardBorderA:rgba(255,255,255,.55);--cardBorderB:rgba(255,255,255,.05);--cardBorderC:rgba(255,255,255,.35);--cardShadowInset:rgba(255,255,255,.06);--cardShadow:rgba(0,0,0,.3);
+--pillBorder:#fff;--pillHoverBg:#fff;--pillHoverText:#000;
+--navPrevBorder:#fff;--navPrevHover:rgba(255,255,255,.1);--navNextBg:#fff;--navNextText:#000;--navNextHover:#e6e6e6;--dotBorder:#fff;--dotOn:#fff;
+--overlayBg:rgba(0,0,0,.6);--briefBg:rgba(48,48,48,.96);--briefBody:#dedede;
+--vLab:#6f6f6b;--vMsg:#9a9a94;--vProg:#2a2a2a;--vProgFill:#cfcfc9;--replayOverlay:rgba(0,0,0,.55);--replayBtnBg:rgba(255,255,255,.16);--replayBtnHover:rgba(255,255,255,.3);
+color-scheme:dark}
+@media(prefers-color-scheme:light){:root{--stageBg:#eef0f2;--card:rgba(0,0,0,.05);--muted:rgb(110,113,102);--blue:rgb(63,92,209);
+--phoneBg:#fff;--text:#141414;--phoneBorder:#e2e2e2;--mediaBg1:#f1f1ef;--mediaBg2:#e7e7e4;--mediaBorder:#dcdcd8;--mediaLab:#7c7c74;--mediaSub:#9d9d95;
+--cardSurface:rgba(0,0,0,.03);--cardSurfaceHover:rgba(0,0,0,.055);--cardBorderA:rgba(0,0,0,.28);--cardBorderB:rgba(0,0,0,.04);--cardBorderC:rgba(0,0,0,.16);--cardShadowInset:rgba(255,255,255,.6);--cardShadow:rgba(0,0,0,.08);
+--pillBorder:#141414;--pillHoverBg:#141414;--pillHoverText:#fff;
+--navPrevBorder:#141414;--navPrevHover:rgba(0,0,0,.06);--navNextBg:#141414;--navNextText:#fff;--navNextHover:#000;--dotBorder:#141414;--dotOn:#141414;
+--overlayBg:rgba(0,0,0,.35);--briefBg:rgba(255,255,255,.98);--briefBody:#3a3a3a;
+--vLab:#9d9d95;--vMsg:#7c7c74;--vProg:#e0e0dc;--vProgFill:#8d8d85;--replayOverlay:rgba(255,255,255,.65);--replayBtnBg:rgba(20,20,20,.1);--replayBtnHover:rgba(20,20,20,.2);
+color-scheme:light}}
 *{box-sizing:border-box}
 body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased}
-.stage{min-height:100vh;min-height:100dvh;background:var(--stageBg);display:flex;align-items:center;justify-content:center;padding:24px 0}
-.phone{position:relative;width:402px;height:874px;max-height:calc(100dvh - 48px);background:#000;color:#fff;border-radius:46px;border:1px solid #1c1c1c;box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:hidden;display:flex;flex-direction:column}
+.stage{min-height:100vh;min-height:100dvh;background:var(--stageBg);display:flex;align-items:stretch;justify-content:center}
+.phone{position:relative;width:100%;max-width:560px;min-height:100vh;min-height:100dvh;background:var(--phoneBg);color:var(--text);overflow:hidden;display:flex;flex-direction:column}
 .scr{display:flex;flex-direction:column;height:100%;min-height:0}
 .scrHead{flex-shrink:0;padding:46px 24px 14px}
 .scrBody{flex:1;min-height:0;overflow-y:auto;padding:0 24px 24px}
@@ -28,30 +44,30 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 .logoSub{font-size:11px;color:var(--muted);letter-spacing:.5px}
 .homeTitle{font-size:18px;font-weight:700;white-space:nowrap}
 .hero{margin-top:16px;height:180px}
-.media{border-radius:20px;background:repeating-linear-gradient(135deg,#131313,#131313 11px,#191919 11px,#191919 22px);border:1px solid #232323;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;color:#7c7c78}
-.mediaLab{font-size:13px;font-weight:600;color:#9a9a94}
-.mediaSub{font-family:'Inter',ui-monospace,monospace;font-size:10px;letter-spacing:.5px;color:#5f5f5c}
+.media{border-radius:20px;background:repeating-linear-gradient(135deg,var(--mediaBg1),var(--mediaBg1) 11px,var(--mediaBg2) 11px,var(--mediaBg2) 22px);border:1px solid var(--mediaBorder);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;color:var(--mediaLab)}
+.mediaLab{font-size:13px;font-weight:600;color:var(--mediaLab)}
+.mediaSub{font-family:'Inter',ui-monospace,monospace;font-size:10px;letter-spacing:.5px;color:var(--mediaSub)}
 .disclaim{font-size:11px;font-weight:500;color:var(--muted);margin:16px 0 12px;line-height:1.4}
-.card{position:relative;background:rgba(255,255,255,.035);-webkit-backdrop-filter:blur(28px) saturate(180%);backdrop-filter:blur(28px) saturate(180%);border:1px solid transparent;background-clip:padding-box;border-radius:20px;padding:15px 20px;display:flex;gap:15px;align-items:flex-start;margin-bottom:10px;box-shadow:0 1px 0 rgba(255,255,255,.06) inset,0 8px 24px rgba(0,0,0,.3)}
-.card::before{content:'';position:absolute;inset:0;border-radius:20px;padding:0.5px;background:linear-gradient(var(--tiltDeg,135deg),rgba(255,255,255,.55),rgba(255,255,255,.05) 35%,rgba(255,255,255,.05) 65%,rgba(255,255,255,.35));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;transition:background 60ms linear}
+.card{position:relative;background:var(--cardSurface);-webkit-backdrop-filter:blur(28px) saturate(180%);backdrop-filter:blur(28px) saturate(180%);border:1px solid transparent;background-clip:padding-box;border-radius:20px;padding:15px 20px;display:flex;gap:15px;align-items:flex-start;margin-bottom:10px;box-shadow:0 1px 0 var(--cardShadowInset) inset,0 8px 24px var(--cardShadow)}
+.card::before{content:'';position:absolute;inset:0;border-radius:20px;padding:0.5px;background:linear-gradient(var(--tiltDeg,135deg),var(--cardBorderA),var(--cardBorderB) 35%,var(--cardBorderB) 65%,var(--cardBorderC));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;transition:background 60ms linear}
 .card.tap{cursor:pointer;transition:background .15s,transform .15s cubic-bezier(.2,.8,.2,1)}
-.card.tap:hover{background:rgba(255,255,255,.07);transform:scale(1.02)}
+.card.tap:hover{background:var(--cardSurfaceHover);transform:scale(1.02)}
 .card.tap:active{transform:scale(1.05)}
-.cardIco{width:34px;height:34px;flex-shrink:0;color:#fff;display:flex;align-items:center;justify-content:center}
+.cardIco{width:34px;height:34px;flex-shrink:0;color:var(--text);display:flex;align-items:center;justify-content:center}
 .cardMain{flex:1;min-width:0}
 .cardT{font-size:18px;font-weight:700;line-height:1.15}
 .cardD{font-size:11px;line-height:14px;color:var(--muted);white-space:pre-line;margin-top:4px}
-.cardTime{font-size:11px;color:#fff;white-space:nowrap;flex-shrink:0;padding-top:2px}
+.cardTime{font-size:11px;color:var(--text);white-space:nowrap;flex-shrink:0;padding-top:2px}
 .flowHead{display:flex;align-items:center;gap:12px}
 .flowT{font-size:18px;font-weight:700;white-space:nowrap}
-.briefPill{border:1px solid #fff;border-radius:11px;font-size:10px;line-height:1;padding:5px 8px;cursor:pointer;white-space:nowrap;background:transparent;color:#fff}
-.briefPill:hover{background:#fff;color:#000}
+.briefPill{border:1px solid var(--pillBorder);border-radius:11px;font-size:10px;line-height:1;padding:5px 8px;cursor:pointer;white-space:nowrap;background:transparent;color:var(--text)}
+.briefPill:hover{background:var(--pillHoverBg);color:var(--pillHoverText)}
 .spacer{flex:1}
-.iconBtn{cursor:pointer;color:#fff;display:flex;align-items:center;padding:4px;margin:-4px}
+.iconBtn{cursor:pointer;color:var(--text);display:flex;align-items:center;padding:4px;margin:-4px}
 .flowMedia{height:338px;margin-bottom:6px}
 .stepTitle{font-size:28px;font-weight:700;line-height:1.12;letter-spacing:-.6px;margin:22px 0 14px}
-.lead{font-size:16px;line-height:1.5;color:#e8e8e4;white-space:pre-line;margin:0 0 18px}
-.leadb{font-weight:700;color:#fff}
+.lead{font-size:16px;line-height:1.5;color:var(--text);white-space:pre-line;margin:0 0 18px}
+.leadb{font-weight:700;color:var(--text)}
 .bullets{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
 .bullet{font-size:14px;line-height:1.45;color:var(--muted);padding-left:16px;position:relative}
 .bullet::before{content:'•';position:absolute;left:2px;top:0;color:var(--muted)}
@@ -59,41 +75,39 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 .bullet.note::before{color:var(--blue)}
 .nav{display:grid;grid-template-columns:60px 1fr 60px;align-items:center;gap:10px}
 .navBtn{width:60px;height:60px;border-radius:30px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;cursor:pointer;user-select:none}
-.navPrev{border:1px solid #fff;color:#fff;background:transparent}
-.navPrev:hover{background:rgba(255,255,255,.1)}
-.navNext{background:#fff;color:#000;justify-self:end}
-.navNext:hover{background:#e6e6e6}
+.navPrev{border:1px solid var(--navPrevBorder);color:var(--text);background:transparent}
+.navPrev:hover{background:var(--navPrevHover)}
+.navNext{background:var(--navNextBg);color:var(--navNextText);justify-self:end}
+.navNext:hover{background:var(--navNextHover)}
 .dots{display:flex;gap:15px;justify-content:center;align-items:center}
-.dot{width:9px;height:9px;border-radius:50%;border:1px solid #fff;box-sizing:border-box}
-.dot.on{background:#fff}
-.overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9}
-.briefCard{width:100%;max-height:82%;overflow-y:auto;background:rgba(48,48,48,.96);border-radius:40px;box-shadow:0 0 10px rgba(0,0,0,.25);padding:26px 24px;display:flex;flex-direction:column;gap:18px}
+.dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--dotBorder);box-sizing:border-box}
+.dot.on{background:var(--dotOn)}
+.overlay{position:absolute;inset:0;background:var(--overlayBg);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9}
+.briefCard{width:100%;max-height:82%;overflow-y:auto;background:var(--briefBg);border-radius:40px;box-shadow:0 0 10px rgba(0,0,0,.25);padding:26px 24px;display:flex;flex-direction:column;gap:18px}
 .briefCard::-webkit-scrollbar{display:none}
 .briefTop{display:flex;align-items:center;justify-content:space-between}
 .briefTitle{font-size:24px;font-weight:700}
 .briefSec{display:flex;flex-direction:column;gap:5px}
 .briefStep{font-family:'Inter',monospace;font-size:11px;letter-spacing:1px;color:var(--muted)}
 .briefSecT{font-size:16px;font-weight:700}
-.briefSecB{font-size:14px;line-height:1.55;color:#dedede;white-space:pre-line}
+.briefSecB{font-size:14px;line-height:1.55;color:var(--briefBody);white-space:pre-line}
 .hex{width:100%;height:100%;color:inherit}
-.flowMedia{position:relative}
-.vLab{position:absolute;top:14px;left:16px;font-family:'Inter',monospace;font-size:11px;letter-spacing:.5px;color:#6f6f6b}
+.flowMedia{position:relative;overflow:hidden}
+.vLab{position:absolute;top:14px;left:16px;font-family:'Inter',monospace;font-size:11px;letter-spacing:.5px;color:var(--vLab)}
 .vState{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:13px}
 .vPlayIco{animation:vpulse 1.4s ease-in-out infinite}
 @keyframes vpulse{0%,100%{opacity:.45}50%{opacity:1}}
-.vMsg{font-size:13px;font-weight:600;color:#9a9a94}
-.vProg{width:130px;height:3px;border-radius:2px;background:#2a2a2a;overflow:hidden}
-.vProg span{display:block;height:100%;width:0;background:#cfcfc9;animation:vprog 3.6s linear forwards}
+.vMsg{font-size:13px;font-weight:600;color:var(--vMsg)}
+.vProg{width:130px;height:3px;border-radius:2px;background:var(--vProg);overflow:hidden}
+.vProg span{display:block;height:100%;width:0;background:var(--vProgFill);animation:vprog 3.6s linear forwards}
 @keyframes vprog{from{width:0}to{width:100%}}
-.replayWrap{cursor:pointer;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;background:rgba(0,0,0,.55);backdrop-filter:blur(2px)}
-.replayBtn{width:62px;height:62px;border-radius:50%;border:1px solid #fff;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.16);box-shadow:0 4px 18px rgba(0,0,0,.5);transition:background .15s}
-.replayWrap:hover .replayBtn{background:rgba(255,255,255,.3)}
-.vReplay{color:#fff;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.6)}
-.stage.full{padding:0}
-.stage.full .phone{width:100vw;height:100vh;height:100dvh;max-height:none;border-radius:0;border:none;box-shadow:none}
+.replayWrap{cursor:pointer;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;background:var(--replayOverlay);backdrop-filter:blur(2px)}
+.replayBtn{width:62px;height:62px;border-radius:50%;border:1px solid var(--navPrevBorder);display:flex;align-items:center;justify-content:center;background:var(--replayBtnBg);box-shadow:0 4px 18px rgba(0,0,0,.3);transition:background .15s}
+.replayWrap:hover .replayBtn{background:var(--replayBtnHover)}
+.vReplay{color:var(--text);font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.stage.full .phone{max-width:none}
 .vEl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
 .imgFill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-@media(max-width:480px){.stage{padding:0}.phone{width:100vw;height:100vh;height:100dvh;max-height:none;border-radius:0;border:none;box-shadow:none}}
 </style>
 </helmet>
 <template id="__bundler_thumbnail" data-bg-color="#0e0e0e"><svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="800" fill="#0e0e0e"></rect><g fill="none" stroke="#ffffff" stroke-width="10"><path d="M600 300 L680 346 L680 438 L600 484 L520 438 L520 346 Z"></path><path d="M505 372 L560 404 L560 468 L505 500 L450 468 L450 404 Z"></path></g></svg></template>
@@ -103,7 +117,7 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 <div class="scr">
 <div class="scrHead"><div class="homeTop"><div class="logo"><div class="brand">THEPURE <span class="brandThin">ICE FLO</span></div><div class="logoSub">더퓨어 아이스 플로</div></div><div class="homeTitle" style="text-transform: none">기본설정 변경하기</div></div></div>
 <div class="scrBody">
-<div class="media hero" style="background: url(&quot;./thepureiceflo_hero-ms0qkv2c-5i0c.png&quot;) center / cover no-repeat"><sc-if value="{{ hasHero }}" hint-placeholder-val=""><img class="imgFill" src="{{ heroSrc }}" alt=""></sc-if><sc-if value="{{ noHero }}" hint-placeholder-val="{{ true }}"><div class="mediaLab"><br></div></sc-if></div>
+<div class="media hero" style="background: url(&quot;./thepureiceflo_hero-ms0qkv2c-5i0c.png&quot;) center / cover no-repeat"><sc-if value="{{ hasHero }}" hint-placeholder-val=""><img class="imgFill" ref="{{ setHeroRef }}" alt=""></sc-if><sc-if value="{{ noHero }}" hint-placeholder-val="{{ true }}"><div class="mediaLab"><br></div></sc-if></div>
 <sc-if value="{{ showDisclaimer }}" hint-placeholder-val="{{ true }}"><div class="disclaim">아래 기능은 엔지니어 전용기능으로 사용에 주의해주셔야해요.</div></sc-if>
 <div class="card tap" onClick="{{ openIceSize }}"><div class="cardIco"><svg viewBox="0 0 32 21" class="hex"><path fill="currentColor" fill-rule="nonzero" transform="translate(14.168 0)" d="M 8.921 21 L 0 15.753 L 0 5.247 L 8.921 0 L 17.842 5.247 L 17.842 15.753 L 8.921 21 Z M 1.147 15.069 L 8.911 19.644 L 16.675 15.069 L 16.675 5.931 L 8.911 1.356 L 1.147 5.931 L 1.147 15.08 L 1.147 15.069 Z"></path><path fill="currentColor" fill-rule="nonzero" transform="translate(0 6.686)" d="M 6.079 14.314 L 0 10.733 L 0 3.581 L 6.079 0 L 12.159 3.581 L 12.159 10.733 L 6.079 14.314 Z M 1.147 10.06 L 6.069 12.958 L 10.991 10.06 L 10.991 4.264 L 6.069 1.366 L 1.147 4.264 L 1.147 10.06 Z"></path></svg></div><div class="cardMain"><div class="cardT">얼음 크기 변경</div><div class="cardD">기본설정은 작은얼음(8g)이에요.
 큰얼음(11g)으로 변경할 수 있어요.</div></div><div class="cardTime">30초-1분 소요</div></div>
@@ -136,7 +150,7 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 <sc-if value="{{ isFlow }}"><div class="scr">
 <div class="scrHead"><div class="flowHead"><div class="flowT">{{ flowTitle }}</div><div class="briefPill" onClick="{{ toggleBrief }}">간략하게 보기</div><div class="spacer"></div><div class="iconBtn" onClick="{{ home }}"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg></div></div></div>
 <div class="scrBody">
-<div class="media flowMedia"><div class="vLab">제어판 조작 영상</div><sc-if value="{{ hasVideo }}" hint-placeholder-val=""><video class="vEl" src="{{ videoSrc }}" key="{{ videoKey }}" autoplay="" muted="" playsinline="" onEnded="{{ onVideoEnded }}" onLoadedMetadata="{{ setVideoSpeed }}"></video><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replay }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if><sc-if value="{{ noVideo }}" hint-placeholder-val="{{ true }}"><sc-if value="{{ isPlaying }}" hint-placeholder-val="{{ true }}"><div class="vState"><div class="vPlayIco"><svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#8a8a86" stroke-width="2"><circle cx="24" cy="24" r="21"></circle><path d="M20 17l12 7-12 7z" fill="#8a8a86" stroke="none"></path></svg></div><div class="vMsg">재생 중</div><div class="vProg"><span></span></div></div></sc-if><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replay }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if></div>
+<div class="media flowMedia"><sc-if value="{{ hasVideo }}" hint-placeholder-val=""><video class="vEl" ref="{{ setVideoRef }}" key="{{ videoKey }}" autoplay="" muted="" playsinline="" onEnded="{{ onVideoEnded }}" onLoadedMetadata="{{ setVideoSpeed }}"></video><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replay }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if><sc-if value="{{ noVideo }}" hint-placeholder-val="{{ true }}"><sc-if value="{{ isPlaying }}" hint-placeholder-val="{{ true }}"><div class="vState"><div class="vPlayIco"><svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#8a8a86" stroke-width="2"><circle cx="24" cy="24" r="21"></circle><path d="M20 17l12 7-12 7z" fill="#8a8a86" stroke="none"></path></svg></div><div class="vMsg">재생 중</div><div class="vProg"><span></span></div></div></sc-if><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replay }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if></div>
 <h1 class="stepTitle">{{ step.title }}</h1>
 <p class="lead"><b class="leadb">{{ step.leadBold }}</b>{{ step.lead }}</p>
 <ul class="bullets"><sc-for list="{{ step.bullets }}" as="b" hint-placeholder-count="2"><li class="bullet">{{ b }}</li></sc-for><sc-if value="{{ step.note }}" hint-placeholder-val=""><li class="bullet note">{{ step.note }}</li></sc-if></ul>
@@ -244,6 +258,8 @@ class Component extends DCLogic {
       videoKey: s.flow + '-' + s.step + '-' + s.nonce,
       onVideoEnded: () => this.setState({ videoState: 'ended' }),
       setVideoSpeed: (e) => { e.target.playbackRate = this.VIDEO_SPEED; },
+      setVideoRef: (el) => { if (el && videoSrc) el.src = videoSrc; },
+      setHeroRef: (el) => { if (el && this.MEDIA.product) el.src = this.MEDIA.product; },
       showDisclaimer: this.props.showDisclaimer ?? true,
       tiltStyle: { '--tiltDeg': s.tiltDeg + 'deg' },
       enableTilt: () => this.enableTilt(),
