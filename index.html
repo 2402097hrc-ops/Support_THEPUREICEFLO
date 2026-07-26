@@ -30,13 +30,13 @@ color-scheme:dark}
 color-scheme:light}}
 *{box-sizing:border-box}
 body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased}
-.stage{min-height:100vh;min-height:100dvh;background:var(--stageBg);display:flex;align-items:stretch;justify-content:center}
-.phone{position:relative;width:100%;max-width:560px;min-height:100vh;min-height:100dvh;background:var(--phoneBg);color:var(--text);overflow:hidden;display:flex;flex-direction:column}
+.stage{height:100vh;height:100dvh;background:var(--stageBg);display:flex;align-items:stretch;justify-content:center;overflow:hidden}
+.phone{position:relative;width:100%;max-width:560px;height:100vh;height:100dvh;background:var(--phoneBg);color:var(--text);overflow:hidden;display:flex;flex-direction:column}
 .scr{display:flex;flex-direction:column;height:100%;min-height:0}
 .scrHead{flex-shrink:0;padding:46px 24px 14px}
 .scrBody{flex:1;min-height:0;overflow-y:auto;padding:0 24px 24px}
 .scrBody::-webkit-scrollbar{display:none}
-.scrFoot{flex-shrink:0;padding:14px 24px 40px}
+.scrFoot{position:relative;z-index:2;flex-shrink:0;padding:18px 24px 40px;background:linear-gradient(to bottom,color-mix(in srgb,var(--phoneBg) 0%,transparent),color-mix(in srgb,var(--phoneBg) 88%,transparent) 18px,var(--phoneBg) 18px);margin-top:-40px}
 .homeTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 .logo{display:flex;flex-direction:column;gap:3px}
 .brand{font-family:'Inter',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1}
@@ -64,7 +64,6 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 .briefPill:hover{background:var(--pillHoverBg);color:var(--pillHoverText)}
 .spacer{flex:1}
 .iconBtn{cursor:pointer;color:var(--text);display:flex;align-items:center;padding:4px;margin:-4px}
-.flowMedia{height:338px;margin-bottom:6px}
 .stepTitle{font-size:28px;font-weight:700;line-height:1.12;letter-spacing:-.6px;margin:22px 0 14px}
 .lead{font-size:16px;line-height:1.5;color:var(--text);white-space:pre-line;margin:0 0 18px}
 .leadb{font-weight:700;color:var(--text)}
@@ -79,6 +78,8 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 .navPrev:hover{background:var(--navPrevHover)}
 .navNext{background:var(--navNextBg);color:var(--navNextText);justify-self:end}
 .navNext:hover{background:var(--navNextHover)}
+.navDone{background:var(--blue);color:#fff}
+.navDone:hover{background:var(--blue);filter:brightness(1.1)}
 .dots{display:flex;gap:15px;justify-content:center;align-items:center}
 .dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--dotBorder);box-sizing:border-box}
 .dot.on{background:var(--dotOn)}
@@ -92,7 +93,7 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 .briefSecT{font-size:16px;font-weight:700}
 .briefSecB{font-size:14px;line-height:1.55;color:var(--briefBody);white-space:pre-line}
 .hex{width:100%;height:100%;color:inherit}
-.flowMedia{position:relative;overflow:hidden}
+.flowMedia{position:relative;overflow:hidden;flex-shrink:0;--flowW:min(calc(100vw - 48px),57.2vh,462px);width:var(--flowW);height:calc(var(--flowW) / 1.1);margin:0 auto 10px;border:none}
 .vLab{position:absolute;top:14px;left:16px;font-family:'Inter',monospace;font-size:11px;letter-spacing:.5px;color:var(--vLab)}
 .vState{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:13px}
 .vPlayIco{animation:vpulse 1.4s ease-in-out infinite}
@@ -105,6 +106,7 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 .replayBtn{width:62px;height:62px;border-radius:50%;border:1px solid var(--navPrevBorder);display:flex;align-items:center;justify-content:center;background:var(--replayBtnBg);box-shadow:0 4px 18px rgba(0,0,0,.3);transition:background .15s}
 .replayWrap:hover .replayBtn{background:var(--replayBtnHover)}
 .vReplay{color:var(--text);font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.pauseIco{width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center}
 .stage.full .phone{max-width:none}
 .vEl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
 .imgFill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -149,13 +151,13 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 </div></sc-if>
 <sc-if value="{{ isFlow }}"><div class="scr">
 <div class="scrHead"><div class="flowHead"><div class="flowT">{{ flowTitle }}</div><div class="briefPill" onClick="{{ toggleBrief }}">간략하게 보기</div><div class="spacer"></div><div class="iconBtn" onClick="{{ home }}"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg></div></div></div>
-<div class="scrBody">
-<div class="media flowMedia"><sc-if value="{{ hasVideo }}" hint-placeholder-val=""><video class="vEl" ref="{{ setVideoRef }}" key="{{ videoKey }}" autoplay="" muted="" playsinline="" onEnded="{{ onVideoEnded }}" onLoadedMetadata="{{ setVideoSpeed }}"></video><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replay }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if><sc-if value="{{ noVideo }}" hint-placeholder-val="{{ true }}"><sc-if value="{{ isPlaying }}" hint-placeholder-val="{{ true }}"><div class="vState"><div class="vPlayIco"><svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#8a8a86" stroke-width="2"><circle cx="24" cy="24" r="21"></circle><path d="M20 17l12 7-12 7z" fill="#8a8a86" stroke="none"></path></svg></div><div class="vMsg">재생 중</div><div class="vProg"><span></span></div></div></sc-if><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replay }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if></div>
+<div class="media flowMedia" onClick="{{ togglePause }}" style="cursor:pointer"><sc-if value="{{ hasVideo }}" hint-placeholder-val=""><video class="vEl" ref="{{ setVideoRef }}" key="{{ videoKey }}" muted="" playsinline="" onEnded="{{ onVideoEnded }}" onLoadedMetadata="{{ setVideoSpeed }}"></video><sc-if value="{{ showPauseIcon }}" hint-placeholder-val=""><div class="vState"><div class="pauseIco"><svg viewBox="0 0 24 24" width="40" height="40" fill="#fff"><rect x="5" y="4" width="5" height="16" rx="1"></rect><rect x="14" y="4" width="5" height="16" rx="1"></rect></svg></div></div></sc-if><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replay }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if><sc-if value="{{ noVideo }}" hint-placeholder-val="{{ true }}"><sc-if value="{{ isPlaying }}" hint-placeholder-val="{{ true }}"><div class="vState"><div class="vPlayIco"><svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#8a8a86" stroke-width="2"><circle cx="24" cy="24" r="21"></circle><path d="M20 17l12 7-12 7z" fill="#8a8a86" stroke="none"></path></svg></div><div class="vMsg">재생 중</div><div class="vProg"><span></span></div></div></sc-if><sc-if value="{{ showPauseIcon }}" hint-placeholder-val=""><div class="vState"><div class="pauseIco"><svg viewBox="0 0 24 24" width="40" height="40" fill="#fff"><rect x="5" y="4" width="5" height="16" rx="1"></rect><rect x="14" y="4" width="5" height="16" rx="1"></rect></svg></div></div></sc-if><sc-if value="{{ isEnded }}" hint-placeholder-val=""><div class="vState replayWrap" onClick="{{ replay }}"><div class="replayBtn"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.3"></path><path d="M3 3v4h4"></path></svg></div><div class="vMsg vReplay">다시재생</div></div></sc-if></sc-if></div>
+<div class="scrBody" style="padding-top:6px;padding-bottom:110px">
 <h1 class="stepTitle">{{ step.title }}</h1>
 <p class="lead"><b class="leadb">{{ step.leadBold }}</b>{{ step.lead }}</p>
 <ul class="bullets"><sc-for list="{{ step.bullets }}" as="b" hint-placeholder-count="2"><li class="bullet">{{ b }}</li></sc-for><sc-if value="{{ step.note }}" hint-placeholder-val=""><li class="bullet note">{{ step.note }}</li></sc-if></ul>
 </div>
-<div class="scrFoot"><div class="nav"><div class="navBtn navPrev" onClick="{{ prev }}">이전</div><div class="dots"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="4"><span class="{{ d.cls }}"></span></sc-for></div><div class="navBtn navNext" onClick="{{ next }}">다음</div></div></div>
+<div class="scrFoot"><div class="nav"><div class="navBtn navPrev" onClick="{{ prev }}">이전</div><div class="dots"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="4"><span class="{{ d.cls }}"></span></sc-for></div><div class="navBtn {{ nextCls }}" onClick="{{ next }}">{{ nextLabel }}</div></div></div>
 </div></sc-if>
 <sc-if value="{{ brief }}" hint-placeholder-val=""><div class="overlay" onClick="{{ toggleBrief }}"><div class="briefCard" onClick="{{ stop }}"><div class="briefTop"><div class="briefTitle">{{ flowTitle }}</div><div class="iconBtn" onClick="{{ toggleBrief }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg></div></div><sc-for list="{{ briefSections }}" as="s" hint-placeholder-count="4"><div class="briefSec"><div class="briefStep">{{ s.step }}</div><div class="briefSecT">{{ s.title }}</div><div class="briefSecB">{{ s.body }}</div></div></sc-for></div></div></sc-if>
 </div>
@@ -196,13 +198,31 @@ class Component extends DCLogic {
   }
 
   componentWillUnmount() { clearTimeout(this._vt); window.removeEventListener('deviceorientation', this._onOrient); }
+  isLastStep() {
+    const f = this.flows[this.state.flow];
+    return f ? this.state.step === f.steps.length - 1 : false;
+  }
+  onVideoEnd() {
+    if (this.isLastStep()) this.setState({ videoState: 'ended' });
+    else this.next();
+  }
   playVideo() {
     clearTimeout(this._vt);
     this.setState(s => ({ videoState: 'playing', nonce: s.nonce + 1 }));
     // 실제 영상이 있으면 <video> 의 onEnded 이벤트로 종료를 감지하고,
     // 없으면 플레이스홀더용으로 재생 시간을 시뮬레이션합니다.
     if (!this.curVideoSrc()) {
-      this._vt = setTimeout(() => this.setState({ videoState: 'ended' }), this.VIDEO_MS);
+      this._vt = setTimeout(() => this.onVideoEnd(), this.VIDEO_MS);
+    }
+  }
+  togglePause() {
+    if (this.state.videoState === 'ended') return;
+    if (this.curVideoSrc() && this._videoEl) {
+      if (this._videoEl.paused) { this._videoEl.play().catch(() => {}); this.setState({ videoState: 'playing' }); }
+      else { this._videoEl.pause(); this.setState({ videoState: 'paused' }); }
+    } else {
+      if (this.state.videoState === 'playing') { clearTimeout(this._vt); this.setState({ videoState: 'paused' }); }
+      else { this.playVideo(); }
     }
   }
 
@@ -230,8 +250,10 @@ class Component extends DCLogic {
     else this.go('home');
   }
   prev() {
-    if (this.state.step > 0) { this.setState({ step: this.state.step - 1 }); this.playVideo(); }
-    else this.go('home');
+    if (this.state.step > 0) {
+      clearTimeout(this._vt);
+      this.setState(s => ({ step: s.step - 1, videoState: 'ended', nonce: s.nonce + 1 }));
+    } else this.go('home');
   }
 
   renderVals() {
@@ -242,6 +264,7 @@ class Component extends DCLogic {
     const step = st ? { title: st.title, leadBold: st.leadBold, lead: st.lead, bullets: st.bullets, note: st.note } : { title: '', leadBold: '', lead: '', bullets: [], note: '' };
     const dots = flow ? flow.steps.map((_, i) => ({ cls: i === s.step ? 'dot on' : 'dot' })) : [];
     const briefSections = flow ? flow.steps.map((x, i) => ({ step: 'STEP 0' + (i + 1), title: x.title, body: x.leadBold + x.lead })) : [];
+    const isLastStep = flow ? s.step === flow.steps.length - 1 : false;
     const chrome = this.props.deviceChrome ?? 'phone';
     return {
       isHome: s.screen === 'home', isEtc: s.screen === 'etc', isFlow: s.screen === 'flow',
@@ -256,9 +279,11 @@ class Component extends DCLogic {
       noVideo: !videoSrc,
       videoSrc,
       videoKey: s.flow + '-' + s.step + '-' + s.nonce,
-      onVideoEnded: () => this.setState({ videoState: 'ended' }),
+      onVideoEnded: () => this.onVideoEnd(),
       setVideoSpeed: (e) => { e.target.playbackRate = this.VIDEO_SPEED; },
-      setVideoRef: (el) => { if (el && videoSrc) el.src = videoSrc; },
+      setVideoRef: (el) => { this._videoEl = el; if (el && videoSrc) { el.src = videoSrc; if (s.videoState === 'playing') el.play().catch(() => {}); } },
+      togglePause: () => this.togglePause(),
+      showPauseIcon: s.videoState === 'paused',
       setHeroRef: (el) => { if (el && this.MEDIA.product) el.src = this.MEDIA.product; },
       showDisclaimer: this.props.showDisclaimer ?? true,
       tiltStyle: { '--tiltDeg': s.tiltDeg + 'deg' },
@@ -266,6 +291,8 @@ class Component extends DCLogic {
       stageCls: chrome === 'full' ? 'stage full' : 'stage',
       flowTitle: flow ? flow.headerTitle : '',
       step, dots, briefSections,
+      nextLabel: isLastStep ? '완료' : '다음',
+      nextCls: isLastStep ? 'navNext navDone' : 'navNext',
       openIceSize: () => this.openFlow('iceSize'),
       openStorage: () => this.openFlow('iceStorage'),
       openHot: () => this.openFlow('hotTemp'),
