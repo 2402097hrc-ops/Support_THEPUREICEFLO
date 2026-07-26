@@ -72,6 +72,8 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 .bullet::before{content:'•';position:absolute;left:2px;top:0;color:var(--muted)}
 .bullet.note{color:var(--blue);margin-top:6px}
 .bullet.note::before{color:var(--blue)}
+.telLink{color:var(--blue);text-decoration:underline;font-weight:700;cursor:pointer}
+.copyToast{position:absolute;left:50%;bottom:110px;transform:translateX(-50%);background:rgba(20,20,20,.92);color:#fff;font-size:13px;font-weight:600;padding:10px 18px;border-radius:12px;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,.3);white-space:nowrap}
 .nav{display:grid;grid-template-columns:60px 1fr 60px;align-items:center;gap:10px}
 .navBtn{width:60px;height:60px;border-radius:30px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;cursor:pointer;user-select:none}
 .navPrev{border:1px solid var(--navPrevBorder);color:var(--text);background:transparent}
@@ -158,17 +160,18 @@ body{margin:0;font-family:'Pretendard','Inter',-apple-system,BlinkMacSystemFont,
 <div class="scrBody" style="padding-top:6px;padding-bottom:110px">
 <h1 class="stepTitle">{{ step.title }}</h1>
 <p class="lead"><b class="leadb">{{ step.leadBold }}</b>{{ step.lead }}</p>
-<ul class="bullets"><sc-for list="{{ step.bullets }}" as="b" hint-placeholder-count="2"><li class="bullet">{{ b }}</li></sc-for><sc-if value="{{ step.note }}" hint-placeholder-val=""><li class="bullet note">{{ step.note }}</li></sc-if></ul>
+<ul class="bullets"><sc-for list="{{ step.bullets }}" as="b" hint-placeholder-count="2"><li class="bullet">{{ b }}</li></sc-for><sc-if value="{{ step.note }}" hint-placeholder-val=""><li class="bullet note">{{ step.noteBefore }}<span class="telLink" onClick="{{ onCallClick }}">{{ step.notePhone }}</span>{{ step.noteAfter }}</li></sc-if></ul>
 </div>
 <div class="scrFoot"><div class="nav"><div class="navBtn navPrev" onClick="{{ prev }}">이전</div><div class="dots"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="4"><span class="{{ d.cls }}"></span></sc-for></div><div class="navBtn {{ nextCls }}" onClick="{{ next }}">{{ nextLabel }}</div></div></div>
 </div></sc-if>
+<sc-if value="{{ copyToast }}" hint-placeholder-val=""><div class="copyToast">전화번호가 복사되었습니다.</div></sc-if>
 <sc-if value="{{ brief }}" hint-placeholder-val=""><div class="overlay" onClick="{{ toggleBrief }}"><div class="briefCard" onClick="{{ stop }}"><div class="briefTop"><div class="briefTitle">{{ flowTitle }}</div><div class="iconBtn" onClick="{{ toggleBrief }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg></div></div><sc-for list="{{ briefSections }}" as="s" hint-placeholder-count="4"><div class="briefSec"><div class="briefStep">{{ s.step }}</div><div class="briefSecT">{{ s.title }}</div><div class="briefSecB">{{ s.body }}</div></div></sc-for></div></div></sc-if>
 </div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:503,&quot;height&quot;:960},&quot;deviceChrome&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;phone&quot;,&quot;full&quot;],&quot;default&quot;:&quot;phone&quot;,&quot;tsType&quot;:&quot;'phone'|'full'&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;showDisclaimer&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
 class Component extends DCLogic {
-  state = { screen: 'home', flow: null, step: 0, brief: false, videoState: 'playing', nonce: 0, tiltDeg: 135 };
+  state = { screen: 'home', flow: null, step: 0, brief: false, videoState: 'playing', nonce: 0, tiltDeg: 135, copyToast: false };
 
   componentDidMount() {
     this._onOrient = (e) => {
@@ -185,6 +188,18 @@ class Component extends DCLogic {
   }
   VIDEO_MS = 3600;
   VIDEO_SPEED = 1;
+  PHONE_NUMBER = '1800-8888';
+  isMobileDevice() { return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); }
+  onCallClick() {
+    if (this.isMobileDevice()) {
+      window.location.href = 'tel:' + this.PHONE_NUMBER;
+    } else {
+      navigator.clipboard.writeText(this.PHONE_NUMBER).catch(() => {});
+      clearTimeout(this._copyToastT);
+      this.setState({ copyToast: true });
+      this._copyToastT = setTimeout(() => this.setState({ copyToast: false }), 1000);
+    }
+  }
 
   // ── 미디어 파일 경로 (assets/ 폴더에 넣으세요. 비워두면 플레이스홀더 표시) ──
   // 이미지: jpg/png/webp · 영상: mp4/webm (무음·autoplay 대상이므로 muted 재생됩니다)
@@ -278,7 +293,9 @@ class Component extends DCLogic {
     const flow = s.flow ? this.flows[s.flow] : null;
     const videoSrc = this.curVideoSrc();
     const st = flow ? flow.steps[s.step] : null;
-    const step = st ? { title: st.title, leadBold: st.leadBold, lead: st.lead, bullets: st.bullets, note: st.note } : { title: '', leadBold: '', lead: '', bullets: [], note: '' };
+    const notePhone = '1800-8888';
+    const noteParts = st && st.note ? st.note.split('고객만족센터') : ['', ''];
+    const step = st ? { title: st.title, leadBold: st.leadBold, lead: st.lead, bullets: st.bullets, note: st.note, noteBefore: noteParts[0], notePhone: st.note ? '고객만족센터' : '', noteAfter: noteParts[1] } : { title: '', leadBold: '', lead: '', bullets: [], note: '', noteBefore: '', notePhone: '', noteAfter: '' };
     const dots = flow ? flow.steps.map((_, i) => ({ cls: i === s.step ? 'dot on' : 'dot' })) : [];
     const briefSections = flow ? flow.steps.map((x, i) => ({ step: 'STEP 0' + (i + 1), title: x.title, body: x.leadBold + x.lead })) : [];
     const isLastStep = flow ? s.step === flow.steps.length - 1 : false;
@@ -299,6 +316,8 @@ replay: () => this.playVideo(),
       videoSrc,
       videoKey: s.flow + '-' + s.step + '-' + s.nonce,
       onVideoEnded: () => this.onVideoEnd(),
+      onCallClick: () => this.onCallClick(),
+      copyToast: s.copyToast,
       onVideoPlaying: () => { if (this.state.videoState === 'loading') this.setState({ videoState: 'playing' }); },
       onVideoWaiting: () => { if (this.state.videoState === 'playing') this.setState({ videoState: 'loading' }); },
       setVideoSpeed: (e) => { e.target.playbackRate = this.VIDEO_SPEED; },
